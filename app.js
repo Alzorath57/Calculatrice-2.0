@@ -10,7 +10,7 @@ const state = {
   egal: false,
 };
 
-//bouton cliqué
+//action de la calculatrice
 boutons.addEventListener("click", function (event) {
   const boutonSelectionner = event.target;
   if (boutonSelectionner.dataset.chiffre) {
@@ -21,6 +21,10 @@ boutons.addEventListener("click", function (event) {
   }
   if (["="].includes(boutonSelectionner.dataset.action)) {
     gererEgal(boutonSelectionner.dataset.action);
+  }
+  if (["C", "CE", "⌫"].includes(boutonSelectionner.dataset.action)) {
+    gererAction(boutonSelectionner.dataset.action);
+  }
 });
 
 // affiche le premier chiffre
@@ -59,13 +63,34 @@ function gererEgal(egal) {
     resultatFinal = nombre1 * nombre2;
   }
   if (state.operation === "/") {
-    if (nombre2 === 0){
-        resultat.textContent = "Désolé... Nous ne pouvons pas diviser par zéro"
-        return
-    }else {
-        resultatFinal = nombre1 / nombre2;}
-    
+    if (nombre2 === 0) {
+      resultat.textContent = "Désolé... Nous ne pouvons pas diviser par zéro";
+      return;
+    } else {
+      resultatFinal = nombre1 / nombre2;
+    }
   }
 
   resultat.textContent = resultatFinal;
+}
+
+// C , CE , ⌫
+function gererAction(action) {
+  if (["C"].includes(action)) {
+    state.affiche = "0";
+    state.calcul = "";
+    state.operation = null;
+    state.egal = false;
+  }
+  if (["CE"].includes(action)) {
+    state.affiche = "0";
+  }
+  if (["⌫"].includes(action)) {
+    state.affiche = state.affiche.slice(0, -1);
+    if (state.affiche === "") {
+      state.affiche = "0";
+    }
+  }
+  resultat.textContent = state.affiche;
+  calcul.textContent = state.calcul;
 }
