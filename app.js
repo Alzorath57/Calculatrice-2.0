@@ -25,6 +25,9 @@ boutons.addEventListener("click", function (event) {
   if (["C", "CE", "⌫"].includes(boutonSelectionner.dataset.action)) {
     gererAction(boutonSelectionner.dataset.action);
   }
+  if (["."].includes(boutonSelectionner.dataset.action)) {
+    gererDecimal(boutonSelectionner.dataset.action);
+  }
 });
 
 // affiche le premier chiffre
@@ -93,4 +96,14 @@ function gererAction(action) {
   }
   resultat.textContent = state.affiche;
   calcul.textContent = state.calcul;
+}
+
+// Décimal (.)
+function gererDecimal() {
+  if (state.affiche.includes(".")) {
+    return;
+  } else {
+    state.affiche += ".";
+  }
+  resultat.textContent = state.affiche;
 }
