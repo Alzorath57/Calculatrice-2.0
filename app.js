@@ -28,6 +28,9 @@ boutons.addEventListener("click", function (event) {
   if (["."].includes(boutonSelectionner.dataset.action)) {
     gererDecimal(boutonSelectionner.dataset.action);
   }
+  if (["±"].includes(boutonSelectionner.dataset.action)) {
+    gererSigne(boutonSelectionner.dataset.action);
+  }
 });
 
 // affiche le premier chiffre
@@ -98,12 +101,19 @@ function gererAction(action) {
   calcul.textContent = state.calcul;
 }
 
-// Décimal (.)
+// chiffre décimal
 function gererDecimal() {
   if (state.affiche.includes(".")) {
     return;
   } else {
     state.affiche += ".";
   }
+  resultat.textContent = state.affiche;
+}
+
+//chiffre possitif, négatif
+function gererSigne() {
+  const nombre = parseFloat(state.affiche);
+  state.affiche = (nombre * -1).toString();
   resultat.textContent = state.affiche;
 }
